@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>战争雷霆 空战自动驾驶</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<header>
+  <h1>战争雷霆 空战自动驾驶</h1>
+  <div class="status-chips">
+    <span id="chip-source" class="chip">数据源: -</span>
+    <span id="chip-conn" class="chip chip-bad">无8111数据</span>
+    <span id="chip-focus" class="chip chip-warn">焦点: -</span>
+    <span id="chip-mode" class="chip">待机</span>
+  </div>
+</header>
+
+<p id="message" class="message">启动中…</p>
+
+<main>
+  <section class="card">
+    <h2>飞行模式</h2>
+    <div class="modes">
+      <label class="mode">
+        <input type="radio" name="mode" value="stabilize">
+        <span class="mode-title">保持稳定</span>
+        <span class="mode-sub">保持当前航向平飞。</span>
+      </label>
+      <label class="mode with-target">
+        <input type="radio" name="mode" value="alt_hold">
+        <span class="mode-title">确定高度</span>
+        <span class="mode-sub">保持指定高度，同时飞向目标点。</span>
+        <span class="mode-target">
+          <input type="text" id="mode-altitude" placeholder="留空 = 当前高度">
+          <span class="unit">m</span>
+        </span>
+      </label>
+      <label class="mode">
+        <input type="radio" name="mode" value="navigate">
+        <span class="mode-title">飞往目标点</span>
+        <span class="mode-sub">保持接通时的高度，压坡度转向地图上的 <code>point_of_interest</code>。</span>
+      </label>
+    </div>
+    <div class="row">
+      <button id="btn-engage" class="primary">接通</button>
+      <button id="btn-disengage">脱开</button>
+      <button id="btn-focus">切到游戏</button>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>8111数据</h2>
+    <div class="readout" id="readout"></div>
+    <div class="nav-line" id="nav-line"></div>
+  </section>
+
+  <section class="card">
+    <h2>控制输出</h2>
+    <table class="bars" id="bars"></table>
+  </section>
+
+  <section class="card">
+    <h2>参数</h2>
+    <form id="params-form" class="params"></form>
+    <div class="row">
+      <button id="btn-save-params" class="primary">应用参数</button>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>按键绑定</h2>
+    <p class="hint">
+      自动从控制文件里识别。想覆盖某个动作，直接填键名
+      （如 <code>NUMPAD9</code>、<code>W</code>、<code>NUMPAD8_EXT</code>），多个用逗号分隔。
+    </p>
+    <div id="blk-drop" class="dropzone">
+      <input type="file" id="blk-file" accept=".blk" hidden>
+      <strong>上传 .blk 控制文件</strong>
+      <span>拖到这里，或点击选择文件</span>
+      <span class="path" id="blk-path"></span>
+    </div>
+    <table class="bindings" id="bindings"></table>
+    <div class="row">
+      <button id="btn-save-bindings" class="primary">保存按键覆盖</button>
+    </div>
+    <p class="hint">
+      可用键名：<span id="key-names" class="key-names"></span>
+    </p>
+  </section>
+
+  <section class="card">
+    <h2>连接</h2>
+    <label class="field">
+      <span>数据源</span>
+      <select id="source-select">
+        <option value="http">战争雷霆 (localhost:8111)</option>
+        <option value="powerbroker">PowerBroker 库 (需要 pip install WarThunder)</option>
+        <option value="sim">离线模拟器</option>
+        <option value="fixture">录制的抓包 (ref/)</option>
+      </select>
+    </label>
+    <label class="field">
+      <span>游戏地址</span>
+      <input type="text" id="base-url">
+    </label>
+    <label class="field checkbox">
+      <input type="checkbox" id="require-focus">
+      <span>只在游戏窗口处于前台时发送按键</span>
+    </label>
+    <label class="field">
+      <span>游戏窗口标题包含</span>
+      <input type="text" id="focus-title">
+    </label>
+    <div class="row">
+      <button id="btn-save-settings" class="primary">应用连接设置</button>
+    </div>
+    <p class="hint" id="calib-line"></p>
+  </section>
+</main>
+
+<footer>
+  <span id="loop-info"></span>
+</footer>
+
+<script>
+  window.WT = {
+    keyNames: {{ key_names | tojson }},
+    bindable: {{ bindable | tojson }}
+  };
+</script>
+<script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>

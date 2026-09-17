@@ -1,0 +1,5 @@
+flask>=3.0
+requests>=2.31
+# Optional: PowerBroker's WarThunder telemetry library
+# pip install WarThunder
+# Then set source to "powerbroker" in the UI

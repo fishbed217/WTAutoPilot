@@ -1,0 +1,50 @@
+{
+  "settings": {
+    "source": "http",
+    "base_url": "http://localhost:8111",
+    "timeout_s": 0.4,
+    "blk_path": "C:\\Users\\17530\\Desktop\\pj\\WTAutoPilot\\ref\\key.blk",
+    "require_focus": true,
+    "focus_title": "War Thunder",
+    "autoconnect": true,
+    "sim_time_scale": 1.0,
+    "dry_run": false
+  },
+  "params": {
+    "tick_hz": 10,
+    "max_bank_deg": 60,
+    "max_pitch_deg": 20,
+    "roll_kp": 0.005,
+    "roll_kd": 0.01,
+    "pitch_kp": 0.03,
+    "pitch_kd": 0.01,
+    "heading_kp": 1.2,
+    "alt_kp": 0.02,
+    "vario_kd": 0.15,
+    "target_altitude_m": 4500,
+    "target_heading_deg": null,
+    "arrive_radius_m": 400,
+    "axis_deadband": 0.06,
+    "min_altitude_m": 150,
+    "use_throttle": false,
+    "throttle_target": 0.85,
+    "throttle_kp": 0.004,
+    "target_speed_kmh": 1000,
+    "use_rudder": true,
+    "rudder_kp": 0.01,
+    "control_strategy": "segmented"
+  },
+  "calibration": {
+    "roll_sign": -1,
+    "pitch_sign": -1,
+    "map_sign": 1
+  },
+  "key_overrides": {
+    "aileron_right": [
+      "D"
+    ],
+    "aileron_left": [
+      "A"
+    ]
+  }
+}
